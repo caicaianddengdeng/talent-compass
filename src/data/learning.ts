@@ -1,0 +1,136 @@
+import type { QuizData } from './types';
+
+export const learningQuiz: QuizData = {
+  questions: [
+    {
+      id: 1,
+      text: '学习新知识时，你更喜欢哪种方式？',
+      options: [
+        { label: '📊 看图表、视频、演示', value: 0, scores: { V: 3 } },
+        { label: '🎧 听讲解、讨论、播客', value: 1, scores: { A: 3 } },
+        { label: '📝 阅读文字、做笔记', value: 2, scores: { R: 3 } },
+        { label: '🔧 动手实操、边做边学', value: 3, scores: { K: 3 } },
+      ],
+    },
+    {
+      id: 2,
+      text: '记住一个陌生人的名字，你最可能通过什么方式？',
+      options: [
+        { label: '👀 在脑海里想象ta的名字写在脸上的样子', value: 0, scores: { V: 3 } },
+        { label: '🗣️ 在心里默念几遍这个名字', value: 1, scores: { A: 3 } },
+        { label: '✍️ 想象把这个名字写下来的样子', value: 2, scores: { R: 3 } },
+        { label: '🤝 跟ta握手并重复ta的名字', value: 3, scores: { K: 3 } },
+      ],
+    },
+    {
+      id: 3,
+      text: '遇到一个复杂问题需要解决，你通常会？',
+      options: [
+        { label: '📋 画流程图、思维导图来分析', value: 0, scores: { V: 3 } },
+        { label: '💬 找人讨论、把想法说出来', value: 1, scores: { A: 3 } },
+        { label: '📖 查阅资料、列出步骤清单', value: 2, scores: { R: 3 } },
+        { label: '⚡ 直接动手尝试，边做边调整', value: 3, scores: { K: 3 } },
+      ],
+    },
+    {
+      id: 4,
+      text: '看书时你最容易被打断的方式是？',
+      options: [
+        { label: '🖼️ 不相关的图像或视觉干扰', value: 0, scores: { V: 2 } },
+        { label: '🔊 周围的声音或说话声', value: 1, scores: { A: 2 } },
+        { label: '📱 文字信息、弹窗通知', value: 2, scores: { R: 2 } },
+        { label: '🪑 身体不舒服、坐不住', value: 3, scores: { K: 2 } },
+      ],
+    },
+    {
+      id: 5,
+      text: '学习一个新软件时，你倾向于？',
+      options: [
+        { label: '🎬 先看一遍操作视频教程', value: 0, scores: { V: 3 } },
+        { label: '🎙️ 听别人口头讲解怎么用', value: 1, scores: { A: 3 } },
+        { label: '📕 先通读使用手册和文档', value: 2, scores: { R: 3 } },
+        { label: '🖱️ 直接打开软件点着试', value: 3, scores: { K: 3 } },
+      ],
+    },
+    {
+      id: 6,
+      text: '对课堂/培训的偏好？',
+      options: [
+        { label: '🎨 有PPT、板书、演示的课堂', value: 0, scores: { V: 3 } },
+        { label: '🗣️ 以讨论、互动为主的课堂', value: 1, scores: { A: 3 } },
+        { label: '📚 以阅读材料为主的自主学习', value: 2, scores: { R: 3 } },
+        { label: '🔬 有实验、练习的实践课堂', value: 3, scores: { K: 3 } },
+      ],
+    },
+    {
+      id: 7,
+      text: '给别人指路时你会？',
+      options: [
+        { label: '🗺️ 画一张地图或者在纸上示意', value: 0, scores: { V: 3 } },
+        { label: '🗣️ 口头详细描述怎么走', value: 1, scores: { A: 3 } },
+        { label: '📝 写下路线步骤发给对方', value: 2, scores: { R: 3 } },
+        { label: '🚶 直接带对方走一遍', value: 3, scores: { K: 3 } },
+      ],
+    },
+    {
+      id: 8,
+      text: '空闲时间你更愿意？',
+      options: [
+        { label: '🎬 看电影、纪录片、展览', value: 0, scores: { V: 3 } },
+        { label: '🎵 听音乐、播客、有声书', value: 1, scores: { A: 3 } },
+        { label: '📖 看书、写日记、写文章', value: 2, scores: { R: 3 } },
+        { label: '🏃 运动、做手工、出去玩', value: 3, scores: { K: 3 } },
+      ],
+    },
+  ],
+  results: [
+    {
+      id: 'V',
+      name: '视觉型学习者',
+      emoji: '👁️',
+      subtitle: '看见才能记住',
+      description: '你对图形、颜色、空间布局极其敏感。信息以图像形式呈现时，你的理解速度和记忆深度远超平均水平。你擅长通过图表、视频、流程图来理解复杂概念，心中有一幅清晰的知识地图。',
+      strengths: ['图表理解力强', '空间想象力好', '对色彩和布局敏感', '看一遍就能记住'],
+      careers: ['平面设计师', '数据分析师', '建筑师', 'UI/UX设计师', '视频剪辑师'],
+      color: '#8B5CF6',
+      gradient: 'linear-gradient(135deg, #7C3AED, #8B5CF6)',
+      deepAnalysis: '视觉型学习者的核心优势在于"图像化思维"。你应当充分利用思维导图、流程图、视频教程等视觉工具来学习。建议将复杂信息转化为图表，用不同颜色标记知识重点。工作中适合需要视觉创造力的岗位。警惕：纯听觉输入的讲座对你效率最低，记得带上笔记本画图。',
+    },
+    {
+      id: 'A',
+      name: '听觉型学习者',
+      emoji: '👂',
+      subtitle: '听到才能理解',
+      description: '你对声音、节奏、语调高度敏感。口头讲解和讨论是你最高效的学习方式。你能够从对话中捕捉关键信息，通过复述来加深理解，在讨论中碰撞出新想法。',
+      strengths: ['听力记忆力好', '语言表达能力强', '善于对话和讨论', '对节奏和音调敏感'],
+      careers: ['心理咨询师', '教师/培训师', '记者', '主持人/配音', '销售/谈判'],
+      color: '#EC4899',
+      gradient: 'linear-gradient(135deg, #EC4899, #F472B6)',
+      deepAnalysis: '听觉型学习者的优势在于"声波记忆"。你的大脑对声音信息有天然的编码优势。建议将学习材料录制成音频反复听，参加学习小组多讨论，把知识点讲给别人听。播客和有声书是你的最佳学习工具。工作中适合需要口才和倾听能力的岗位。',
+    },
+    {
+      id: 'R',
+      name: '读写型学习者',
+      emoji: '📝',
+      subtitle: '写下才能消化',
+      description: '文字是你的思维载体。阅读和书写是你最自然的认知方式。你擅长从文字中提取逻辑结构，通过写作来整理思路，对于清单、笔记、文章有天然的亲近感。',
+      strengths: ['阅读理解能力强', '写作表达清晰', '逻辑思维严谨', '善于整理归纳'],
+      careers: ['编辑/作家', '律师/法务', '研究员', '翻译', '产品经理'],
+      color: '#F59E0B',
+      gradient: 'linear-gradient(135deg, #D97706, #F59E0B)',
+      deepAnalysis: '读写型学习者是"文字建筑师"。阅读和写作不仅是你的学习方式，更是你的思维工具。建议多写读书笔记、列提纲、做清单，把知识点用自己的话重写一遍。博客写作和知识管理工具（如Notion、Obsidian）会极大提升你的效率。工作中适合需要文字功底和逻辑分析的岗位。',
+    },
+    {
+      id: 'K',
+      name: '动觉型学习者',
+      emoji: '🤸',
+      subtitle: '动手才能掌握',
+      description: '你的身体就是最好的学习工具。通过动手操作、实际演练、角色扮演来学习，效果远胜于听讲或阅读。你需要在"做"的过程中建立肌肉记忆和直觉理解。',
+      strengths: ['动手能力强', '身体协调性好', '实践出真知', '体验式记忆力佳'],
+      careers: ['外科医生', '工程师', '运动员/教练', '厨师', '实验科学家'],
+      color: '#10B981',
+      gradient: 'linear-gradient(135deg, #059669, #10B981)',
+      deepAnalysis: '动觉型学习者是"身体力行的实践家"。静态学习对你来说效率最低——你需要动起来。建议学习中穿插实操环节，用模拟实验、角色扮演等方式加深理解。站着学习或边走边思考可能比坐着更有效。工作中适合需要动手和实操技能的岗位。警惕：长时间坐着听讲的会议对你来说是效率黑洞。',
+    },
+  ],
+};

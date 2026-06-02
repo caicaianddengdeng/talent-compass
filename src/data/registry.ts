@@ -2,6 +2,8 @@ import type { Question, ResultType } from './types';
 import { talentQuiz } from './talent';
 import { loveQuiz } from './love';
 import { mbtiQuiz } from './mbti';
+import { learningQuiz } from './learning';
+import { eqQuiz } from './eq';
 
 export interface QuizMeta {
   id: string;
@@ -59,6 +61,30 @@ export const quizRegistry: Record<string, QuizMeta> = {
     color: '#059669',
     tags: ['性格', '经典', '自我认知'],
   },
+  learning: {
+    id: 'learning',
+    title: '学习风格测评',
+    emoji: '🎓',
+    description: 'VARK模型：了解你是视觉型/听觉型/读写型/动觉型学习者',
+    questionCount: 8,
+    duration: '2分钟',
+    participants: 189432,
+    gradient: 'linear-gradient(135deg, #7C3AED, #8B5CF6)',
+    color: '#7C3AED',
+    tags: ['教育', '学习', '自我提升'],
+  },
+  eq: {
+    id: 'eq',
+    title: '职场情商测评',
+    emoji: '🧠',
+    description: '6维度情商评估：自我驱动、情绪管理、同理心、社交、抗压、乐观',
+    questionCount: 10,
+    duration: '3分钟',
+    participants: 245671,
+    gradient: 'linear-gradient(135deg, #F97316, #F59E0B)',
+    color: '#F97316',
+    tags: ['职场', '情商', '人际关系'],
+  },
 };
 
 export function getQuiz(id: string): QuizBundle {
@@ -68,6 +94,8 @@ export function getQuiz(id: string): QuizBundle {
     case 'talent': return { meta, ...talentQuiz };
     case 'love': return { meta, ...loveQuiz };
     case 'mbti': return { meta, ...mbtiQuiz };
+    case 'learning': return { meta, ...learningQuiz };
+    case 'eq': return { meta, ...eqQuiz };
     default: throw new Error(`Quiz not found: ${id}`);
   }
 }

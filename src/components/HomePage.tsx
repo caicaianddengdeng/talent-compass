@@ -1,4 +1,8 @@
+import { useEffect, useState } from 'react';
 import type { QuizMeta } from '../data/registry';
+import { trackPageView } from '../utils/track';
+import { getHistory, type ResultRecord } from '../utils/history';
+import AdUnit from './AdUnit';
 
 interface HomePageProps {
   quizzes: QuizMeta[];
@@ -7,6 +11,12 @@ interface HomePageProps {
 
 export default function HomePage({ quizzes, onSelect }: HomePageProps) {
   const totalParticipants = quizzes.reduce((sum, q) => sum + q.participants, 0);
+  const [history, setHistory] = useState<ResultRecord[]>([]);
+
+  useEffect(() => {
+    trackPageView('home');
+    setHistory(getHistory().slice(0, 3));
+  }, []);
 
   return (
     <div className="home">
@@ -22,6 +32,29 @@ export default function HomePage({ quizzes, onSelect }: HomePageProps) {
           <span className="total-label">人已参与</span>
         </div>
       </header>
+
+      {/* Recent history */}
+      {history.length > 0 && (
+        <div className="history-section">
+          <h3 className="history-title">📋 最近测评</h3>
+          <div className="history-list">
+            {history.map((r, i) => (
+              <button
+                key={i}
+                className="history-item"
+                onClick={() => onSelect(r.quizId)}
+              >
+                <span className="history-emoji">{r.result.emoji}</span>
+                <div className="history-info">
+                  <span className="history-result">{r.result.name}</span>
+                  <span className="history-quiz">{r.quizTitle}</span>
+                </div>
+                <span className="history-time">{timeAgo(r.timestamp)}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="quiz-grid">
         {quizzes.map((q) => (
@@ -50,6 +83,8 @@ export default function HomePage({ quizzes, onSelect }: HomePageProps) {
         ))}
       </div>
 
+      <AdUnit mode="self-promo" />
+
       <footer className="home-footer">
         <p>免费 · 无需注册 · AI即时分析</p>
       </footer>
@@ -60,4 +95,12 @@ export default function HomePage({ quizzes, onSelect }: HomePageProps) {
 function formatNum(n: number): string {
   if (n >= 10000) return (n / 10000).toFixed(0) + '万';
   return n.toLocaleString();
+}
+
+function timeAgo(ts: number): string {
+  const diff = Date.now() - ts;
+  if (diff < 60000) return '刚刚';
+  if (diff < 3600000) return `${Math.floor(diff / 60000)}分钟前`;
+  if (diff < 86400000) return `${Math.floor(diff / 3600000)}小时前`;
+  return `${Math.floor(diff / 86400000)}天前`;
 }

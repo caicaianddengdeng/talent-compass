@@ -1,5 +1,6 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import type { QuizBundle } from '../data/registry';
+import { trackQuizStart } from '../utils/track';
 
 interface QuizPageProps {
   quiz: QuizBundle;
@@ -11,10 +12,19 @@ export default function QuizPage({ quiz, onComplete }: QuizPageProps) {
   const TOTAL = questions.length;
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<number[]>(new Array(TOTAL).fill(-1));
+  const [animDir, setAnimDir] = useState<'forward' | 'back'>('forward');
 
   const q = questions[current];
   const selected = answers[current];
   const progress = ((current + (selected >= 0 ? 1 : 0)) / TOTAL) * 100;
+  const tracked = useRef(false);
+
+  useEffect(() => {
+    if (!tracked.current) {
+      trackQuizStart(quiz.meta.id);
+      tracked.current = true;
+    }
+  }, [quiz.meta.id]);
 
   const selectOption = useCallback(
     (index: number) => {
@@ -24,7 +34,10 @@ export default function QuizPage({ quiz, onComplete }: QuizPageProps) {
       setAnswers(next);
 
       if (current < TOTAL - 1) {
-        setTimeout(() => setCurrent(current + 1), 300);
+        setTimeout(() => {
+          setAnimDir('forward');
+          setCurrent(current + 1);
+        }, 300);
       } else {
         setTimeout(() => onComplete(next), 400);
       }
@@ -33,7 +46,10 @@ export default function QuizPage({ quiz, onComplete }: QuizPageProps) {
   );
 
   const goBack = useCallback(() => {
-    if (current > 0) setCurrent(current - 1);
+    if (current > 0) {
+      setAnimDir('back');
+      setCurrent(current - 1);
+    }
   }, [current]);
 
   return (
@@ -50,7 +66,7 @@ export default function QuizPage({ quiz, onComplete }: QuizPageProps) {
         </div>
       </div>
 
-      <div className="quiz-card">
+      <div className="quiz-card" key={current}>
         <div className="question-number">
           {quiz.meta.emoji} {quiz.meta.title} · Q{current + 1}
         </div>

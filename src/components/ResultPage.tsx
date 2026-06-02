@@ -1,5 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { ResultType } from '../data/types';
+import { isUnlocked } from '../data/codes';
+import { trackPaywallClick, trackShare } from '../utils/track';
+import { generateShareImage } from '../utils/shareImage';
+import PaywallModal from './PaywallModal';
+import AdUnit from './AdUnit';
+import ShareGuide from './ShareGuide';
+import Confetti from './Confetti';
 
 interface ResultPageProps {
   quizId: string;
@@ -10,7 +17,14 @@ interface ResultPageProps {
 }
 
 export default function ResultPage({ quizId, result, allScores, results, onRestart }: ResultPageProps) {
-  const [showPaywall, setShowPaywall] = useState(false);
+  const [showPaywallModal, setShowPaywallModal] = useState(false);
+  const [unlocked, setUnlocked] = useState(false);
+  const [showPoster, setShowPoster] = useState(false);
+  const [posterUrl, setPosterUrl] = useState('');
+
+  useEffect(() => {
+    setUnlocked(isUnlocked());
+  }, []);
 
   const sortedScores = Object.entries(allScores)
     .sort(([, a], [, b]) => b - a)
@@ -27,10 +41,19 @@ export default function ResultPage({ quizId, result, allScores, results, onResta
       await navigator.clipboard.writeText(`${shareText} ${url}`);
       alert('已复制分享文案到剪贴板！');
     }
+    trackShare('link');
+  };
+
+  const handleGeneratePoster = async () => {
+    trackShare('poster');
+    const url = await generateShareImage(result, allScores, results);
+    setPosterUrl(url);
+    setShowPoster(true);
   };
 
   return (
     <div className="result-page">
+      <Confetti active colors={[result.color, '#F59E0B', '#EC4899', '#3B82F6', '#10B981']} />
       <div className="result-header">
         <h2 className="result-title-small">你的测评结果</h2>
       </div>
@@ -67,7 +90,7 @@ export default function ResultPage({ quizId, result, allScores, results, onResta
       </div>
 
       {/* Strengths */}
-      {!showPaywall && result.strengths.length > 0 && (
+      {result.strengths.length > 0 && (
         <div className="section">
           <h3 className="section-title">✨ 你的核心优势</h3>
           <div className="strengths-grid">
@@ -77,7 +100,7 @@ export default function ResultPage({ quizId, result, allScores, results, onResta
       )}
 
       {/* Careers */}
-      {!showPaywall && result.careers.length > 0 && (
+      {result.careers.length > 0 && (
         <div className="section">
           <h3 className="section-title">🎯 适合的职业方向</h3>
           <div className="careers-list">
@@ -87,8 +110,8 @@ export default function ResultPage({ quizId, result, allScores, results, onResta
       )}
 
       {/* Paywall or Deep Analysis */}
-      {!showPaywall ? (
-        <button className="btn-deep" onClick={() => setShowPaywall(true)}>
+      {!unlocked ? (
+        <button className="btn-deep" onClick={() => { setShowPaywallModal(true); trackPaywallClick(quizId); }}>
           🔓 解锁深度分析报告 — ¥9.9
         </button>
       ) : (
@@ -102,17 +125,45 @@ export default function ResultPage({ quizId, result, allScores, results, onResta
       {/* Action buttons */}
       <div className="action-buttons">
         <button className="btn-share" onClick={handleShare}>📤 分享给朋友</button>
+        <button className="btn-poster" onClick={handleGeneratePoster}>🖼️ 生成海报</button>
         <button className="btn-retry" onClick={onRestart}>🔄 测其他</button>
       </div>
 
       {/* Ad */}
-      <div className="ad-placeholder">
-        <span>广告位 — 接入百度联盟/AdSense变现</span>
-      </div>
+      <AdUnit mode="self-promo" />
 
       <footer className="result-footer">
         <p>© 2026 天赋罗盘 | 测评结果仅供娱乐参考</p>
       </footer>
+
+      {/* Paywall Modal */}
+      {showPaywallModal && (
+        <PaywallModal
+          onClose={() => setShowPaywallModal(false)}
+          onUnlock={() => { setUnlocked(true); setShowPaywallModal(false); }}
+        />
+      )}
+
+      {/* Poster Overlay */}
+      {showPoster && (
+        <div className="share-poster-overlay" onClick={() => setShowPoster(false)}>
+          <div className="share-poster-content" onClick={(e) => e.stopPropagation()}>
+            <img className="share-poster-img" src={posterUrl} alt="测评结果海报" />
+            <div className="share-poster-actions">
+              <button className="btn-poster-download" onClick={() => {
+                const a = document.createElement('a');
+                a.href = posterUrl;
+                a.download = `talent-compass-${result.id}.png`;
+                a.click();
+              }}>💾 保存图片</button>
+              <button className="btn-poster-close" onClick={() => setShowPoster(false)}>关闭</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* WeChat/QQ Share Guide */}
+      <ShareGuide />
     </div>
   );
 }
