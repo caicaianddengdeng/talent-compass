@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import type { QuizBundle } from '../data/registry';
 import { trackQuizStart } from '../utils/track';
+import AdUnit from './AdUnit';
 
 interface QuizPageProps {
   quiz: QuizBundle;
@@ -91,6 +92,8 @@ export default function QuizPage({ quiz, onComplete }: QuizPageProps) {
           <div key={i} className={`dot ${a >= 0 ? 'done' : ''} ${i === current ? 'current' : ''}`} />
         ))}
       </div>
+
+      <AdUnit mode="affiliate" />
     </div>
   );
 }

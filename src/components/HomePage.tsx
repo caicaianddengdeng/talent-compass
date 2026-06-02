@@ -56,6 +56,8 @@ export default function HomePage({ quizzes, onSelect }: HomePageProps) {
         </div>
       )}
 
+      <AdUnit mode="affiliate" />
+
       <div className="quiz-grid">
         {quizzes.map((q) => (
           <button key={q.id} className="quiz-card-btn" onClick={() => onSelect(q.id)}>

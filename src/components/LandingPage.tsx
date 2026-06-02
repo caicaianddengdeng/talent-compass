@@ -1,4 +1,5 @@
 import { quizRegistry } from '../data/registry';
+import AdUnit from './AdUnit';
 
 interface LandingPageProps {
   onEnter: () => void;
@@ -53,6 +54,8 @@ export default function LandingPage({ onEnter }: LandingPageProps) {
           <div className="feature"><span className="feature-icon">🔍</span> MBTI测试</div>
         </div>
       </div>
+
+      <AdUnit mode="affiliate" />
 
       <footer className="landing-footer">
         <p>© 2026 天赋罗盘 | 测评结果仅供娱乐参考</p>

@@ -109,6 +109,8 @@ export default function ResultPage({ quizId, result, allScores, results, onResta
         </div>
       )}
 
+      <AdUnit mode="affiliate" />
+
       {/* Paywall or Deep Analysis */}
       {!unlocked ? (
         <button className="btn-deep" onClick={() => { setShowPaywallModal(true); trackPaywallClick(quizId); }}>
@@ -130,7 +132,7 @@ export default function ResultPage({ quizId, result, allScores, results, onResta
       </div>
 
       {/* Ad */}
-      <AdUnit mode="self-promo" />
+      <AdUnit mode="affiliate" />
 
       <footer className="result-footer">
         <p>© 2026 天赋罗盘 | 测评结果仅供娱乐参考</p>
