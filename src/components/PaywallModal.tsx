@@ -14,12 +14,13 @@ const PAYMENT_INFO = {
 };
 
 export default function PaywallModal({ onClose, onUnlock }: PaywallModalProps) {
-  const [mode, setMode] = useState<'choose' | 'wxpay' | 'alipay'>('choose');
+  const [mode, setMode] = useState<'choose' | 'wxpay' | 'alipay' | 'confirm'>('choose');
   const [qrError, setQrError] = useState<Record<string, boolean>>({});
+  const [confirmMethod, setConfirmMethod] = useState<string>('');
 
-  const handleUnlock = (method: string) => {
+  const handleConfirm = () => {
     setUnlocked();
-    trackPaywallUnlock(method);
+    trackPaywallUnlock(confirmMethod);
     onUnlock();
   };
 
@@ -90,7 +91,7 @@ export default function PaywallModal({ onClose, onUnlock }: PaywallModalProps) {
               </div>
             </div>
 
-            <button className="paywall-unlock-btn" onClick={() => handleUnlock('wxpay')}>
+            <button className="paywall-unlock-btn" onClick={() => { setConfirmMethod('wxpay'); setMode('confirm'); }}>
               ✅ 我已完成支付，立即解锁
             </button>
           </div>
@@ -132,8 +133,25 @@ export default function PaywallModal({ onClose, onUnlock }: PaywallModalProps) {
               </div>
             </div>
 
-            <button className="paywall-unlock-btn" onClick={() => handleUnlock('alipay')}>
+            <button className="paywall-unlock-btn" onClick={() => { setConfirmMethod('alipay'); setMode('confirm'); }}>
               ✅ 我已完成支付，立即解锁
+            </button>
+          </div>
+        )}
+        {mode === 'confirm' && (
+          <div className="paywall-confirm">
+            <h3 className="paywall-title">确认付款</h3>
+            <div className="paywall-confirm-warn">
+              ⚠️ 诚信交易，请确认您已真实完成付款
+            </div>
+            <p className="paywall-desc">
+              每一笔付费都是对创作者的认可，感谢您的支持。
+            </p>
+            <button className="paywall-unlock-btn" onClick={handleConfirm}>
+              ✅ 确认已付款，解锁报告
+            </button>
+            <button className="paywall-code-link" onClick={() => setMode(confirmMethod === 'wxpay' ? 'wxpay' : 'alipay')}>
+              我还没有付款，返回
             </button>
           </div>
         )}

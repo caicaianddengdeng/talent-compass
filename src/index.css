@@ -1230,6 +1230,62 @@ body {
   margin-bottom: 0.75rem;
 }
 
+/* Payment unlock button */
+.paywall-unlock-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin-top: 1rem;
+  background: linear-gradient(135deg, #10b981, #059669);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.paywall-unlock-btn:hover {
+  background: linear-gradient(135deg, #34d399, #10b981);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+}
+
+.paywall-code-link {
+  display: block;
+  width: 100%;
+  margin-top: 0.75rem;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.paywall-code-link:hover {
+  border-color: rgba(124, 58, 237, 0.3);
+  color: #c4b5fd;
+}
+
+.paywall-confirm {
+  text-align: center;
+}
+
+.paywall-confirm-warn {
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  color: #fbbf24;
+  line-height: 1.6;
+}
+
 /* ====== Ad Unit ====== */
 .ad-container {
   margin: 1rem 0 1.5rem;
